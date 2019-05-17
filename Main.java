@@ -1,28 +1,71 @@
-import java.io.*;
-import java.util.*;
+import java.util.Objects;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int k = in.nextInt();
-        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September",
-                "October", "November", "December"};
-        int[] day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+class Date {
+    private int day;
+    private int month;
+    private int year;
 
-        if (k <= 0) {
-            System.out.println("Out of bounds");
-        }
-        for (int i = 0; i < 12; i++) {
-            if (k <= day[i]) {
-                System.out.println(months[i]);
-                return;
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    //constructor
+    public Date() {
+        setDay(1);
+        setMonth(1);
+        setYear(2000);
+    }
+
+    public void advance() {
+        if (day < 31) {
+            setDay(day + 1);
+        } else {
+            if (month < 12) {
+                setDay(1);
+                setMonth(month + 1);
+            } else {
+                setYear(year + 1);
+                setMonth(1);
+                setDay(1);
             }
-            k -= day[i];
         }
-        System.out.println("Out of bound");
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Date date = (Date) o;
+        return day == date.day &&
+                month == date.month &&
+                year == date.year;
+    }
+    // test the equals method
+    public static void main(String[]args){
+        Date d = new Date();
+        d.advance();
+        System.out.println(d);
+        Date d2 = new Date();
+        System.out.println(d.equals(d2));
+        d2.advance();
+        System.out.println(d.equals(d2));
+    }
+
+    @Override
+    public String toString() {
+        return "Date{" +
+                "day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
     }
 }
-
-
-
-
